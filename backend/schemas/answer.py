@@ -19,3 +19,12 @@ class AnswerResponse(BaseModel):
     strengths: Optional[List[str]] = None
     improvements: Optional[List[str]] = None
     created_at: datetime
+
+
+class AnswerEvaluation(BaseModel):
+    """Structured output requested from the LLM when evaluating an answer."""
+
+    score: int = Field(ge=0, le=100)
+    feedback: str
+    strengths: List[str]
+    improvements: List[str]
