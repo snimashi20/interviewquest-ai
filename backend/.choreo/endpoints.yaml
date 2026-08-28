@@ -1,0 +1,9 @@
+version: 0.1
+endpoints:
+  - name: interviewquest-api
+    displayName: InterviewQuest AI API
+    service:
+      basePath: /api
+      port: 8000
+    type: REST
+    networkVisibility: Public
