@@ -1,28 +1,30 @@
 from typing import List
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from db.database import get_db
 from models.interview import Interview, InterviewStatus
 from models.job import Job, JobStatus, JobType
 from schemas.interview import InterviewCreate, InterviewCreateResponse, InterviewResponse, InterviewSummary
+from services.interview_service import run_generate_question_job
 
 router = APIRouter(prefix="/interviews", tags=["interviews"])
 
 
 @router.post("", response_model=InterviewCreateResponse, status_code=201)
-def create_interview(payload: InterviewCreate, db: Session = Depends(get_db)):
+def create_interview(payload: InterviewCreate, background_tasks: BackgroundTasks, db: Session = Depends(get_db)):
     interview = Interview(role=payload.role, difficulty=payload.difficulty, status=InterviewStatus.PENDING)
     db.add(interview)
     db.commit()
     db.refresh(interview)
 
-    # Question generation is wired up once the AI service is integrated (see #4).
     job = Job(job_type=JobType.GENERATE_QUESTION, interview_id=interview.id, status=JobStatus.PENDING)
     db.add(job)
     db.commit()
     db.refresh(job)
+
+    background_tasks.add_task(run_generate_question_job, job.id, interview.id)
 
     return InterviewCreateResponse(interview_id=interview.id, job_id=job.id)
 
