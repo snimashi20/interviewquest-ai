@@ -1,7 +1,7 @@
 from typing import List
 
 from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 
 from db.database import get_db
 from models.answer import Answer
@@ -40,7 +40,12 @@ def list_interviews(db: Session = Depends(get_db)):
 
 @router.get("/{interview_id}", response_model=InterviewResponse)
 def get_interview(interview_id: int, db: Session = Depends(get_db)):
-    interview = db.query(Interview).filter(Interview.id == interview_id).first()
+    interview = (
+        db.query(Interview)
+        .options(joinedload(Interview.questions).joinedload(Question.answer))
+        .filter(Interview.id == interview_id)
+        .first()
+    )
     if interview is None:
         raise HTTPException(status_code=404, detail="Interview not found")
     return interview
