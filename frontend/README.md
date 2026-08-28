@@ -6,7 +6,7 @@ React + Vite app for the interview UI.
 
 ```sh
 npm install
-cp .env.example .env   # set VITE_API_URL if the backend isn't on localhost:8000
+cp .env.example .env   # set VITE_API_URL if the backend isn't on localhost:8002
 npm run dev
 ```
 

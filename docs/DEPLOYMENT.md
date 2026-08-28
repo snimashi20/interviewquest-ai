@@ -22,7 +22,7 @@ connection string — you'll set it as `DATABASE_URL` on the backend component.
 3. Buildpack: use the provided `backend/Dockerfile` (Docker-based build) —
    this avoids relying on Choreo's Python buildpack correctly detecting `uv`.
 4. Component type: REST API / Service. Choreo reads `backend/.choreo/endpoints.yaml`
-   to expose the API on `/api` at port `8000`.
+   to expose the API on `/api` at port `8002`.
 5. Set environment variables on the component (mirrors `backend/.env.example`):
    - `DATABASE_URL` — the managed Postgres connection string from step 1
    - `OPENAI_API_KEY` — your OpenAI API key
