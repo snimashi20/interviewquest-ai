@@ -4,6 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import models  # noqa: F401  ensures all models are registered on Base before create_tables()
 from core.config import settings
 from db.database import create_tables
+from routers import interviews, jobs
 
 app = FastAPI(
     title="InterviewQuest AI",
@@ -25,6 +26,10 @@ app.add_middleware(
 @app.on_event("startup")
 def on_startup():
     create_tables()
+
+
+app.include_router(interviews.router, prefix=settings.API_PREFIX)
+app.include_router(jobs.router, prefix=settings.API_PREFIX)
 
 
 @app.get("/")
