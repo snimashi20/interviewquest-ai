@@ -117,6 +117,9 @@ export function useAudioRecorder({
   // guards against two recordings at once: a double-click, or a second component trying to
   // start while the first is still going
   const activeRef = useRef(false)
+  // set by cancel(). MediaRecorder fires its 'stop' event synchronously, so this is what
+  // stops a thrown-away recording still being handed over (and paid to transcribe)
+  const cancelledRef = useRef(false)
   // silence tracking
   const speechMsRef = useRef(0)
   const silenceSinceRef = useRef(null)
@@ -259,6 +262,7 @@ export function useAudioRecorder({
     }
 
     activeRef.current = true
+    cancelledRef.current = false
     setError(null)
     setDuration(0)
     setLevel(0)
@@ -319,6 +323,16 @@ export function useAudioRecorder({
     })
 
     recorder.addEventListener('stop', () => {
+      // cancelled: drop the audio on the floor and say nothing to anybody
+      if (cancelledRef.current) {
+        cancelledRef.current = false
+        chunksRef.current = []
+        releaseMicrophone()
+        setStatus(RECORDER_STATUS.IDLE)
+        setDuration(0)
+        return
+      }
+
       const type = recorder.mimeType || mimeType || 'audio/webm'
       const blob = new Blob(chunksRef.current, { type })
       const seconds = (Date.now() - startedAtRef.current) / 1000
@@ -375,12 +389,13 @@ export function useAudioRecorder({
     const recorder = recorderRef.current
     chunksRef.current = []
     if (recorder && recorder.state !== 'inactive') {
-      // drop the stop handler so nothing gets transcribed, then stop the hardware
+      // tell the stop handler to discard rather than hand over, then stop the hardware
+      cancelledRef.current = true
       recorderRef.current = null
       try {
         recorder.stop()
       } catch {
-        // ignore
+        cancelledRef.current = false
       }
     }
     releaseMicrophone()
