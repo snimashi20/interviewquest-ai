@@ -1,3 +1,4 @@
+// shows the AI's grading of an answer - score, feedback text, strengths and improvements
 export default function FeedbackCard({ answer }) {
   return (
     <div className="card">
@@ -7,6 +8,7 @@ export default function FeedbackCard({ answer }) {
       </div>
       <p>{answer.feedback}</p>
 
+      {/* only show this section if there's at least one strength */}
       {answer.strengths?.length > 0 && (
         <div className="feedback-section">
           <h3>Strengths</h3>
@@ -18,6 +20,7 @@ export default function FeedbackCard({ answer }) {
         </div>
       )}
 
+      {/* only show this section if there's at least one improvement */}
       {answer.improvements?.length > 0 && (
         <div className="feedback-section">
           <h3>Improvements</h3>

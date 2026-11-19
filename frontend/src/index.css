@@ -294,3 +294,1003 @@ button:disabled {
 .button-link {
   color: var(--accent);
 }
+
+/* ---------- Fundamentals checklist ---------- */
+
+/* colours for the Beginner / Intermediate / Advanced badges */
+:root {
+  --level-1: #14724f;
+  --level-1-bg: rgba(20, 114, 79, 0.12);
+  --level-2: #9a6400;
+  --level-2-bg: rgba(154, 100, 0, 0.12);
+  --level-3: #a03a66;
+  --level-3-bg: rgba(160, 58, 102, 0.12);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --level-1: #4ade80;
+    --level-1-bg: rgba(74, 222, 128, 0.15);
+    --level-2: #fbbf24;
+    --level-2-bg: rgba(251, 191, 36, 0.15);
+    --level-3: #f472b6;
+    --level-3-bg: rgba(244, 114, 182, 0.15);
+  }
+}
+
+/* the nav links sit together on the right, so new tabs can be added without reflowing */
+.nav-tabs {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* the checklist needs more room than the interview form */
+.card.wide,
+.intro {
+  max-width: 760px;
+}
+
+.intro {
+  width: 100%;
+}
+
+.topic-card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.topic-card-head h2 {
+  margin: 0 0 4px;
+}
+
+.topic-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.topic {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 7px 0;
+}
+
+/* divider between rows only, not above the first one */
+.topic + .topic {
+  border-top: 1px solid var(--border);
+}
+
+.topic label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  font-size: 15px;
+  line-height: 135%;
+  color: var(--text-h);
+  cursor: pointer;
+}
+
+.topic input[type='checkbox'] {
+  flex: none;
+  width: 17px;
+  height: 17px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+/* covered topics get struck out so what's left stands out */
+.topic-done .topic-label {
+  text-decoration: line-through;
+  color: var(--text);
+  opacity: 0.55;
+}
+
+.level {
+  flex: none;
+  font-size: 11px;
+  padding: 3px 9px;
+  border-radius: 999px;
+  white-space: nowrap;
+  background: var(--code-bg);
+  color: var(--text);
+}
+
+.level-beginner {
+  background: var(--level-1-bg);
+  color: var(--level-1);
+}
+
+.level-intermediate {
+  background: var(--level-2-bg);
+  color: var(--level-2);
+}
+
+.level-advanced {
+  background: var(--level-3-bg);
+  color: var(--level-3);
+}
+
+/* level filter pills */
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  align-self: auto;
+  padding: 6px 14px;
+  font-size: 13px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+}
+
+.chip-on {
+  border-color: var(--accent-border);
+  background: var(--accent-bg);
+  color: var(--accent);
+}
+
+.progress-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.progress-track {
+  flex: 1;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--code-bg);
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: var(--accent);
+  transition: width 0.2s ease;
+}
+
+.progress-count {
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+/* ---------- My CV tab: upload control ---------- */
+
+/* the real file input is hidden; the "Choose file" button clicks it for us */
+.file-input-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.upload-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* ---------- multi-question interview ---------- */
+
+/* the "Question 2 of 5" strip above the question itself */
+.question-progress {
+  gap: 10px;
+  padding: 16px 24px;
+}
+
+.question-progress .progress-count {
+  color: var(--text-h);
+  font-size: 14px;
+}
+
+/* ---------- results breakdown ---------- */
+
+/* one question plus its grading, stacked together and separated from the next block */
+.question-block {
+  width: 100%;
+  max-width: 560px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-bottom: 16px;
+}
+
+.question-block + .question-block {
+  border-top: 1px solid var(--border);
+  padding-top: 24px;
+}
+
+.question-number {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 12px;
+}
+
+/* ---------- live interview: panel on top, questions underneath ---------- */
+
+/* while an interview is running the screen is split in two, so pin the app to the viewport
+   and let the question column scroll instead of the whole page */
+#root:has(.interview-live) {
+  height: 100svh;
+}
+
+.interview-live {
+  padding: 0;
+  gap: 0;
+  align-items: stretch;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* top half: the panel of interviewers */
+.interview-stage {
+  flex: 1 1 50%;
+  min-height: 0;
+  background: #0b1220;
+  border-bottom: 1px solid var(--border);
+}
+
+.interview-panel {
+  position: relative;
+  height: 100%;
+}
+
+/* the feed fills the top half, cropping rather than stretching */
+.interview-panel-feed {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.interview-panel-live {
+  position: absolute;
+  top: 14px;
+  left: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(8, 6, 13, 0.6);
+  color: #fff;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #e5484d;
+  animation: live-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes live-pulse {
+  50% {
+    opacity: 0.25;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .live-dot {
+    animation: none;
+  }
+}
+
+/* bottom half: the question and answer box, scrolling on their own so the panel stays put */
+.interview-questions {
+  flex: 1 1 50%;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 24px 32px 32px;
+  box-sizing: border-box;
+  text-align: left;
+}
+
+/* on a phone the panel gives up some room so the answer box still has space */
+@media (max-width: 640px) {
+  .interview-stage {
+    flex: 0 0 34%;
+  }
+
+  .interview-questions {
+    flex: 1 1 auto;
+    padding: 16px;
+  }
+}
+
+/* ---------- Practice: questions, model answers and the code workspace ---------- */
+
+/* a question or task reads as body text, not as a heading */
+.question-text {
+  font-size: 17px;
+  line-height: 150%;
+  color: var(--text-h);
+  white-space: pre-wrap; /* the AI sometimes lays examples out over several lines */
+  margin: 0;
+}
+
+.badge-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* a coding task is flagged differently to its topic badge */
+.badge-code {
+  background: var(--level-1-bg);
+  color: var(--level-1);
+}
+
+/* the student's own prose answer, shown back to them after marking */
+.answer-text {
+  margin: 0;
+  font: inherit;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: var(--text-h);
+}
+
+/* any block of code on a normal page (their submission, the model answer) */
+.code-block {
+  margin: 0;
+  padding: 14px 16px;
+  border-radius: 8px;
+  background: var(--code-bg);
+  color: var(--text-h);
+  font-family: var(--mono);
+  font-size: 14px;
+  line-height: 150%;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+.model-answer-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.model-answer-head h3 {
+  margin: 0 0 4px;
+  font-size: 16px;
+  color: var(--text-h);
+}
+
+.model-answer-head button {
+  align-self: flex-start;
+  flex: none;
+}
+
+/* previous / next strip under a practice question */
+.practice-nav {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.practice-nav .chip {
+  flex: none;
+}
+
+/* ---------- the code workspace ---------- */
+
+.workspace-page .task-card {
+  gap: 12px;
+}
+
+.workspace-page .task-card .chip {
+  align-self: flex-start;
+}
+
+/* editor | divider | output, with the language rail down the left */
+.workspace {
+  display: flex;
+  width: 100%;
+  max-width: 1040px;
+  height: min(62vh, 620px);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--code-bg);
+}
+
+.workspace-rail {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px 8px;
+  border-right: 1px solid var(--border);
+  background: var(--bg);
+}
+
+.rail-button {
+  align-self: auto;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 600;
+  font-family: var(--mono);
+}
+
+.rail-on {
+  border-color: var(--accent-border);
+  background: var(--accent-bg);
+  color: var(--accent);
+}
+
+.workspace-editor,
+.workspace-output {
+  display: flex;
+  flex-direction: column;
+  min-width: 0; /* lets the panes actually shrink instead of overflowing */
+  background: var(--bg);
+}
+
+.workspace-editor {
+  flex: 0 0 auto;
+}
+
+.workspace-output {
+  flex: 1 1 auto;
+  border-left: 1px solid var(--border);
+}
+
+/* the strip above each pane: file name on the left, buttons on the right */
+.workspace-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+  background: var(--social-bg);
+}
+
+.file-tab {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--text-h);
+}
+
+.workspace-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.workspace-actions .chip,
+.workspace-bar .chip {
+  padding: 4px 12px;
+  font-size: 12px;
+}
+
+.run-button {
+  align-self: auto;
+  padding: 5px 16px;
+  font-size: 13px;
+  border-radius: 8px;
+  border: 1px solid var(--accent-border);
+  background: var(--accent);
+  color: #fff;
+}
+
+/* the editor itself: gutter + textarea sharing one scroll feel */
+.editor {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+  font-family: var(--mono);
+  font-size: 14px;
+  line-height: 21px; /* must match the gutter, or the numbers drift off the lines */
+}
+
+.editor-gutter {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  padding: 12px 10px 12px 14px;
+  overflow: hidden;
+  text-align: right;
+  user-select: none;
+  color: var(--text);
+  opacity: 0.45;
+  background: var(--bg);
+}
+
+.editor-gutter span {
+  line-height: 21px;
+}
+
+.editor-area {
+  flex: 1;
+  min-width: 0;
+  padding: 12px 14px 12px 0;
+  border: 0;
+  outline: none;
+  resize: none;
+  background: var(--bg);
+  color: var(--text-h);
+  font: inherit;
+  line-height: 21px;
+  white-space: pre; /* code should scroll sideways, not wrap */
+  overflow: auto;
+  tab-size: 4;
+}
+
+/* the drag handle between the panes */
+.workspace-split {
+  flex: none;
+  width: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: col-resize;
+  background: var(--bg);
+  border-left: 1px solid var(--border);
+}
+
+.workspace-split span {
+  width: 3px;
+  height: 46px;
+  border-radius: 999px;
+  background: var(--border);
+}
+
+.workspace-split:hover span {
+  background: var(--accent);
+}
+
+/* what the program printed */
+.output-pane {
+  flex: 1;
+  margin: 0;
+  padding: 12px 14px;
+  overflow: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-family: var(--mono);
+  font-size: 13px;
+  line-height: 160%;
+  background: var(--bg);
+  color: var(--text-h);
+}
+
+.output-stderr {
+  color: #e5484d;
+}
+
+.output-meta,
+.output-empty {
+  color: var(--text);
+  opacity: 0.7;
+  font-style: italic;
+}
+
+/* on a narrow screen the two panes stack instead of sitting side by side */
+@media (max-width: 760px) {
+  .workspace {
+    flex-wrap: wrap;
+    height: auto;
+  }
+
+  .workspace-rail {
+    flex-direction: row;
+    width: 100%;
+    box-sizing: border-box;
+    border-right: 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .workspace-editor,
+  .workspace-output {
+    flex: 1 1 100%;
+    min-height: 320px;
+    border-left: 0;
+  }
+
+  .workspace-output {
+    border-top: 1px solid var(--border);
+  }
+
+  /* dragging a divider makes no sense once they are stacked */
+  .workspace-split {
+    display: none;
+  }
+}
+
+/* the count and the "Practice" link sit together on the right of a checklist heading */
+.topic-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: none;
+}
+
+.topic-card-actions .chip {
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+/* ---------- the voice interview ---------- */
+
+/* the text/voice choice on the start form */
+.mode-choice {
+  border: none;
+  margin: 0;
+  padding: 0;
+  gap: 8px;
+}
+
+.mode-choice legend {
+  padding: 0;
+  margin-bottom: 6px;
+  font-size: 14px;
+  color: var(--text);
+}
+
+.mode-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 15px;
+  color: var(--text-h);
+}
+
+.mode-option + .mode-option {
+  margin-top: 8px;
+}
+
+.mode-option-on {
+  border-color: var(--accent-border);
+  background: var(--accent-bg);
+}
+
+.mode-option input[type='radio'] {
+  margin-top: 4px;
+  accent-color: var(--accent);
+  flex: none;
+}
+
+.mode-option span {
+  display: block;
+}
+
+.mode-option-blurb {
+  display: block;
+  margin-top: 2px;
+}
+
+/* the interview's own control strip: speak/type, and the way out */
+.progress-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.chip-danger {
+  border-color: rgba(229, 72, 77, 0.4);
+  color: #e5484d;
+}
+
+/* ---------- the AI interviewer panel ---------- */
+
+.interviewer-card {
+  gap: 14px;
+}
+
+.interviewer-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.interviewer-identity {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* a monogram, not a photograph of a person who does not exist */
+.interviewer-avatar {
+  width: 44px;
+  height: 44px;
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--accent-bg);
+  border: 1px solid var(--accent-border);
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+/* a ring that pulses while the question is being read out */
+.interviewer-avatar-speaking {
+  animation: avatar-pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes avatar-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 var(--accent-bg);
+  }
+  50% {
+    box-shadow: 0 0 0 7px var(--accent-bg);
+  }
+}
+
+.interviewer-name {
+  color: var(--text-h);
+  font-size: 15px;
+}
+
+.interviewer-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 2px;
+}
+
+/* the small spinner that sits inside a line of text */
+.spinner-inline {
+  width: 14px;
+  height: 14px;
+  border-width: 2px;
+  flex: none;
+}
+
+/* four bars bouncing while the interviewer talks */
+.speaking-wave {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 22px;
+  flex: none;
+}
+
+.speaking-wave span {
+  width: 3px;
+  height: 30%;
+  border-radius: 2px;
+  background: var(--accent);
+  animation: wave 1s ease-in-out infinite;
+}
+
+.speaking-wave span:nth-child(2) {
+  animation-delay: 0.15s;
+}
+.speaking-wave span:nth-child(3) {
+  animation-delay: 0.3s;
+}
+.speaking-wave span:nth-child(4) {
+  animation-delay: 0.45s;
+}
+
+@keyframes wave {
+  0%,
+  100% {
+    height: 30%;
+  }
+  50% {
+    height: 100%;
+  }
+}
+
+.interviewer-controls {
+  margin-top: 2px;
+}
+
+/* a follow-up question is worth flagging - it came out of the last answer */
+.badge-followup {
+  background: var(--level-2-bg);
+  color: var(--level-2);
+}
+
+/* a quieter badge for facts about an answer rather than its topic */
+.badge-quiet {
+  background: var(--code-bg);
+  color: var(--text);
+}
+
+/* ---------- the candidate's panel ---------- */
+
+.answer-panel {
+  gap: 14px;
+}
+
+.answer-panel-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.answer-panel-title {
+  color: var(--text-h);
+  font-size: 15px;
+}
+
+.recording-timer {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 14px;
+  color: var(--text-h);
+  white-space: nowrap;
+}
+
+/* the level meter: bars that move with how loudly they are speaking */
+.level-meter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  height: 48px;
+  padding: 0 12px;
+  border-radius: 10px;
+  background: var(--code-bg);
+}
+
+.level-bar {
+  width: 5px;
+  min-height: 4px;
+  border-radius: 3px;
+  background: var(--border);
+  transition: height 0.08s linear;
+}
+
+.level-meter-on .level-bar {
+  background: var(--accent);
+}
+
+.answer-actions {
+  align-items: center;
+}
+
+/* the microphone button is the main action on this panel, so it is the only full-size one */
+.mic-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.mic-button-stop {
+  border-color: rgba(229, 72, 77, 0.45);
+  background: rgba(229, 72, 77, 0.1);
+  color: #e5484d;
+}
+
+/* a microphone drawn in CSS rather than pulled in as an icon dependency */
+.mic-glyph {
+  width: 10px;
+  height: 15px;
+  border-radius: 999px;
+  background: currentcolor;
+  box-shadow: 0 7px 0 -5px currentcolor;
+  flex: none;
+}
+
+.mic-stop-glyph {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  background: currentcolor;
+  flex: none;
+}
+
+.transcribing-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ---------- voice settings ---------- */
+
+.voice-settings {
+  gap: 12px;
+  padding: 16px 24px;
+}
+
+.voice-settings-body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.voice-settings-body input[type='range'] {
+  accent-color: var(--accent);
+  width: 100%;
+}
+
+.toggle-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--text-h);
+  cursor: pointer;
+}
+
+.toggle-row input[type='checkbox'] {
+  margin-top: 3px;
+  width: 16px;
+  height: 16px;
+  accent-color: var(--accent);
+  flex: none;
+}
+
+.toggle-row .muted {
+  display: inline;
+}
+
+/* a long interview on a phone: the control strip stacks rather than squeezing */
+@media (max-width: 640px) {
+  .progress-controls,
+  .answer-panel-head,
+  .interviewer-head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .level-meter {
+    height: 40px;
+  }
+}
+
+/* nothing here is load-bearing, so it all stops when motion is turned down */
+@media (prefers-reduced-motion: reduce) {
+  .interviewer-avatar-speaking,
+  .speaking-wave span {
+    animation: none;
+  }
+
+  .level-bar {
+    transition: none;
+  }
+}

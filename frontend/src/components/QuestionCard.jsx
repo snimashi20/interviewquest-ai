@@ -1,3 +1,4 @@
+// shows the interview question and its topic badge
 export default function QuestionCard({ question }) {
   return (
     <div className="card">

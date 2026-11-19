@@ -8,6 +8,8 @@ from schemas.job import JobResponse
 router = APIRouter(prefix="/jobs", tags=["jobs"])
 
 
+# GET /api/jobs/{id} - the frontend calls this over and over (polling) to check
+# if a background task (question generation / answer grading) has finished yet
 @router.get("/{job_id}", response_model=JobResponse)
 def get_job(job_id: str, db: Session = Depends(get_db)):
     job = db.query(Job).filter(Job.id == job_id).first()

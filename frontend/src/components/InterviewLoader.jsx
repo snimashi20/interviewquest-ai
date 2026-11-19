@@ -1,3 +1,4 @@
+// shown while we're waiting on the backend (spinner), or shows the error instead if something failed
 export default function InterviewLoader({ label = 'Working on it…', error }) {
   if (error) {
     return (
